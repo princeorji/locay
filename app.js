@@ -11,8 +11,9 @@ app.get('/', (req, res) => {
 
 app.get('/api/hello', (req, res) => {
   const visitorName = req.query.visitor_name || 'Guest';
+  const clientIp =req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
-  unirest('GET', 'https://get.geojs.io/v1/ip/geo.json')
+  unirest('GET', `https://get.geojs.io/v1/ip/geo/${clientIp}.json`)
     .end((geoResult) => {
       if (geoResult.error) {
         console.error('Geo API error:', geoResult.error);
