@@ -11,12 +11,12 @@ app.get('/', (req, res) => {
 
 app.get('/api/hello', (req, res) => {
   const visitorName = req.query.visitor_name || 'Guest';
-  const clientIp =req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
   unirest('GET', `https://get.geojs.io/v1/ip/geo/${clientIp}.json`)
     .end((geoResult) => {
       if (geoResult.error) {
-        console.error('Geo API error:', geoResult.error);
+        // console.error('Geo API error:', geoResult.error);
         res.status(500).send('Error fetching geo data');
         return;
       }
@@ -30,7 +30,7 @@ app.get('/api/hello', (req, res) => {
         })
         .end((weatherResult) => {
           if (weatherResult.error) {
-            console.error('Weather API error:', weatherResult.error);
+            // console.error('Weather API error:', weatherResult.error);
             res.status(500).send('Error fetching weather data');
             return;
           }
